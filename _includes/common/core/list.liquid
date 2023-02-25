@@ -1,0 +1,16 @@
+{%- include common/rest/site_pages.liquid -%}
+{%- include common/rest/workdir.liquid workdir=page.dir -%}
+
+{%- if workdir == "/til/" -%}
+  {% assign sorted_items = workdir_files | sort: "title" | reverse %}
+{%- else -%}
+  {% assign sorted_items = workdir_files %}
+{%- endif -%}
+{%- for item in sorted_items %}
+  - [{{ item.title | default: item.name }}]({{ item.url | relative_url }})
+{%- endfor -%}
+
+{%- if include.all -%}
+  {%- for workdir in workdir_dirs %}
+    {% include common/core/_list.liquid %}{% endfor -%}
+{%- endif -%}
